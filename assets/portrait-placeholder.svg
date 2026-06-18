@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 350" width="280" height="350">
+  <defs>
+    <clipPath id="r"><rect x="0" y="0" width="280" height="350" rx="12"/></clipPath>
+    <radialGradient id="g" cx="50%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#1b2a33"/>
+      <stop offset="100%" stop-color="#121823"/>
+    </radialGradient>
+  </defs>
+  <g clip-path="url(#r)">
+    <rect width="280" height="350" fill="url(#g)"/>
+    <circle cx="140" cy="124" r="44" fill="#2b3a45"/>
+    <path d="M58 350 C58 268 98 232 140 232 C182 232 222 268 222 350 Z" fill="#2b3a45"/>
+    <text x="140" y="332" fill="#6b7785" font-family="ui-monospace, monospace"
+          font-size="12" letter-spacing="0.08em" text-anchor="middle">ADD YOUR PHOTO</text>
+  </g>
+</svg>

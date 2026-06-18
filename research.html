@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research — Connor McShaffrey</title>
+  <meta name="description" content="Research on viability space decomposition, dynamical systems, bistability, and cell-fate decisions in computational cell biology.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- MathJax renders the equations on this page. It is the only page that
+       loads it, so the rest of the site stays dependency-free. -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <style>
+    /* page-specific: the big featured figure and the themes list */
+    .feature-figure {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 1.5rem;
+      margin: 1rem 0 1rem;
+    }
+    .feature-figure img { display: block; width: 100%; max-width: 500px; height: auto; margin: 0 auto; }
+    .feature-figure figcaption {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      color: var(--ink-dim);
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .themes { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 1.5rem 0; }
+    .eqn { color: var(--ink); margin: 1rem 0 2rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a class="brand" href="index.html">Connor McShaffrey</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul class="nav-links" id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="biography.html">Biography</a></li>
+        <li><a href="research.html" aria-current="page">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="talks.html">Talks</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <header class="page-head">
+        <p class="eyebrow fade-up">What I work on</p>
+        <h1 class="page-title fade-up d1">Research</h1>
+        <hr class="rule fade-up d1">
+      </header>
+
+      <!-- One striking visual leads the page. -->
+      <figure class="feature-figure fade-up d2">
+        <img src="assets/viability-portrait.svg" alt="Viability portrait of the single-cell physiology model: a triangular viability region with a viable attractor, a saddle and its manifolds, a mortality manifold, and an ordering manifold.">
+        <figcaption>
+          The viability portrait of the single-cell physiology model. Inside the
+          triangular viability region, the saddle's stable manifold, a mortality
+          manifold (from the diagonal constraint), and an ordering manifold (from
+          the corner) partition initial conditions by survival outcome — survive
+          to the attractor, or die at one of the three constraints.
+        </figcaption>
+      </figure>
+
+      <section class="prose">
+        <p>
+          I study the viability of living systems — the physiological limits
+          that separate life from death, and how an agent's behavior and
+          metabolism unfold inside them. I pursue this along two tracks that
+          inform each other: <em>extrinsic</em> and <em>intrinsic</em> viability.
+        </p>
+
+        <h2>Extrinsic viability: viability space decomposition</h2>
+        <p>
+          When a model treats an agent's existence as a built-in assumption,
+          the possibility of death has to be added as an explicit constraint —
+          a life–death boundary the dynamics must respect. These systems are
+          strongly nonlinear, and the usual furniture of dynamical systems
+          theory (attractors and their separatrices) is not enough, because a
+          transient excursion alone can be fatal.
+        </p>
+        <p>
+          Viability space decomposition is a framework for analyzing ordinary
+          differential equation models that carry such constraints. It derives
+          new global manifolds — mortality, ordering, and collapse — that,
+          together with the classical invariant sets, partition state space
+          into regions of qualitatively similar survival outcomes: a
+          <em>viability portrait</em>. The key move is to treat the agent's
+          essential variables, its behavior, and its environment as one
+          coupled dynamical system.
+        </p>
+        <div class="eqn">
+          $$
+          \frac{d[M_1]}{dt} = S([M_2]) - D([M_1]), \qquad
+          \frac{d[M_2]}{dt} = S([M_1]) - D([M_2])
+          $$
+        </div>
+        <p>
+          The figure above analyzes one worked example from the paper: two
+          molecular species \([M_1]\) and \([M_2]\) that catalyze each other's
+          synthesis \(S\) and decay \(D\). The cell is alive only inside a
+          triangular viability region — each concentration must stay above a
+          floor and their sum below an osmotic ceiling. Trajectories that survive
+          converge to the viable attractor; others strike one of the three
+          constraints and die. The mortality and ordering manifolds are precisely
+          the boundaries that classical phase-portrait analysis alone would miss.
+        </p>
+
+        <h2>Intrinsic viability</h2>
+        <p>
+          Real organisms aren't handed their limits by an outside observer;
+          their constraints are generated from within, by the network of
+          processes that continually rebuild them. Building on Randall Beer's
+          analysis of autopoiesis in Conway's Game of Life, I work on deriving
+          an emergent individual's viability constraint from first principles —
+          for example, the self-maintenance conditions of a glider — and on
+          generalizing that to other cellular automata.
+        </p>
+
+        <h2>Methods &amp; tools</h2>
+        <p>
+          The work combines numerical integration, continuation, and
+          bifurcation analysis in Python and Mathematica, with reproducible
+          code and data wherever possible. Current threads include
+          characterizing new bifurcations in this setting, extending the theory
+          to higher dimensions, and adding spatial structure between agents.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="container">
+      <p class="foot-note">© 2026 Connor McShaffrey</p>
+      <div class="foot-links">
+        <a href="mailto:cmcshaff@iu.edu">Email</a>
+        <a href="https://scholar.google.com/citations?user=AwhOpPEAAAAJ&hl=en">Google&nbsp;Scholar</a>
+        <a href="https://orcid.org/0009-0006-6860-3213">ORCID</a>
+        <a href="https://github.com/cmcshaff">GitHub</a>
+        <a href="gallery.html">Art</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

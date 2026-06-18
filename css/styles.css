@@ -1,0 +1,481 @@
+/* =====================================================================
+   Connor Hovland — personal site
+   One stylesheet for the whole site. Sections are labelled so you can
+   jump straight to what you want to change.
+
+   The look: a deep near-black field, one luminous teal accent ("the
+   beam"), a serif for titles, a clean sans for reading, and a monospace
+   for small labels (a nod to the fact that the work is computational).
+   To re-theme the whole site, change the variables in :root below.
+   ===================================================================== */
+
+/* ---------- 1. Design tokens ---------------------------------------- */
+:root {
+  --void:      #0a0e14;   /* page background        */
+  --panel:     #121823;   /* cards and raised areas */
+  --line:      #1f2a38;   /* hairline borders       */
+  --ink:       #e9edf2;   /* main text              */
+  --ink-dim:   #93a1b0;   /* secondary text         */
+  --beam:      #4fe0cf;   /* the single accent      */
+  --beam-soft: rgba(79, 224, 207, 0.14);
+
+  --font-display: "Spectral", Georgia, serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  --measure: 68ch;        /* comfortable reading width */
+  --pad:     clamp(1.25rem, 5vw, 3rem);
+}
+
+/* ---------- 2. Base ------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--beam); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 2px solid var(--beam);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* A centered column used by every page. */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+/* ---------- 3. Small mono label ("eyebrow") ------------------------- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--beam);
+  margin: 0 0 1rem;
+}
+
+/* ---------- 4. Top navigation -------------------------------------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 14, 20, 0.78);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.site-nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.brand:hover { text-decoration: none; color: var(--ink); }
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.15rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+}
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+/* The current page is marked in the HTML with aria-current="page". */
+.nav-links a[aria-current="page"] {
+  color: var(--beam);
+}
+
+/* Hamburger button — hidden on desktop, shown on small screens. */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+/* ---------- 5. Hero (home page) ------------------------------------ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+}
+/* The phase portrait sits on the right, fading under the text on the left.
+   `contain` keeps the whole portrait visible and scales it to the hero
+   height, so it stays large and never gets clipped across monitor sizes. */
+.hero-art {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: min(860px, 58%);
+  background: url("../assets/phase-portrait.svg") no-repeat center / contain;
+  opacity: 0.7;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 40%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 40%);
+  pointer-events: none;
+}
+.hero .container {
+  position: relative;
+  width: 100%;
+  padding-block: clamp(3rem, 10vh, 6rem);
+}
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0.4rem 0 0.6rem;
+}
+.hero-role {
+  max-width: 40ch;
+  color: var(--ink-dim);
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+}
+.hero-now {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  margin: 0 0 2rem;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+/* ---------- 6. Buttons --------------------------------------------- */
+.button {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 1.2rem;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.button:hover { text-decoration: none; border-color: var(--beam); color: var(--beam); }
+.button--solid {
+  background: var(--beam);
+  color: var(--void);
+  border-color: var(--beam);
+}
+.button--solid:hover { color: var(--void); filter: brightness(1.08); }
+
+/* ---------- 7. Page header (interior pages) ------------------------ */
+.page-head { padding-block: clamp(3rem, 9vh, 5rem) 1.5rem; }
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+  line-height: 1.05;
+  margin: 0;
+}
+/* A short beam under each page title. */
+.rule {
+  width: 64px;
+  height: 2px;
+  background: var(--beam);
+  border: 0;
+  margin: 1.4rem 0 0;
+}
+
+/* ---------- 8. Long-form prose ------------------------------------- */
+.prose { max-width: var(--measure); padding-block: 1.5rem 4rem; }
+
+/* A portrait photo that floats beside the opening prose. */
+.portrait {
+  float: right;
+  width: clamp(180px, 34%, 280px);
+  margin: 0.3rem 0 1.2rem 1.8rem;
+}
+.portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  display: block;
+}
+.portrait figcaption {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-dim);
+  text-align: center;
+}
+
+.prose p { margin: 0 0 1.3rem; color: #d3dae2; }
+.prose h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin: 2.6rem 0 0.8rem;
+}
+.prose h3 {
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  margin: 2rem 0 0.5rem;
+}
+.prose ul { padding-left: 1.2rem; }
+.prose li { margin: 0.4rem 0; }
+
+/* ---------- 9. Generic sections & cards ---------------------------- */
+.section { padding-block: 1rem 4rem; }
+
+/* A heading that introduces a list section (e.g. "Peer-reviewed"). */
+.section-head {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  max-width: var(--measure);
+  margin: 2.6rem 0 1rem;
+}
+.section-head:first-child { margin-top: 0.5rem; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+}
+.card + .card { margin-top: 1rem; }
+.card:hover { border-color: rgba(79, 224, 207, 0.4); }
+
+/* Publication / news entries share this two-line structure. */
+.entry { padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+.entry:first-of-type { border-top: 1px solid var(--line); }
+.entry-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--beam);
+  margin-bottom: 0.4rem;
+}
+.entry-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.35rem;
+}
+.entry-detail { color: var(--ink-dim); margin: 0; font-size: 0.98rem; }
+.entry-detail a { color: var(--ink); }
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--beam);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  margin-left: 0.5rem;
+  vertical-align: 1px;
+}
+
+/* ---------- 10. Education timeline --------------------------------- */
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li {
+  position: relative;
+  padding: 0 0 2rem 1.8rem;
+  border-left: 1px solid var(--line);
+}
+.timeline li:last-child { border-left-color: transparent; }
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -5px; top: 6px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--beam);
+}
+.timeline .when {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--beam);
+  letter-spacing: 0.05em;
+}
+.timeline .what {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin: 0.2rem 0 0.2rem;
+}
+.timeline .where { color: var(--ink-dim); margin: 0; }
+
+/* ---------- 11. Video embed (Talks page) --------------------------- */
+.video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  margin: 1.5rem 0 0.75rem;
+}
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-caption {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  margin: 0 0 2rem;
+}
+
+/* ---------- 12. Gallery -------------------------------------------- */
+/* On the science pages colour is held to a single teal. The gallery is
+   where the soap-film work lets the full interference spectrum bloom. */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+  padding-block: 1.5rem 4rem;
+}
+.art {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--panel);
+}
+.art figure { margin: 0; }
+/* The coloured block is a placeholder. Replace each .art-frame div with
+   an <img src="assets/your-photo.jpg" alt="..."> when you add real work. */
+.art-frame { aspect-ratio: 4 / 3; }
+.art figcaption {
+  padding: 0.9rem 1.1rem 1.1rem;
+}
+.art-caption-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0 0 0.15rem;
+}
+.art-caption-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  margin: 0;
+}
+
+/* Four soap-film interference placeholders built from gradients. */
+.film-1 { background:
+  radial-gradient(120% 120% at 20% 20%, #ff5e8a 0%, transparent 45%),
+  radial-gradient(120% 120% at 80% 30%, #5ea3ff 0%, transparent 50%),
+  conic-gradient(from 200deg at 50% 60%, #2de0c0, #6a5cff, #ff7ad9, #ffd166, #2de0c0); }
+.film-2 { background:
+  radial-gradient(100% 100% at 70% 30%, #b388ff 0%, transparent 55%),
+  conic-gradient(from 40deg at 40% 50%, #00e5d0, #2f6bff, #c44dff, #00e5d0); }
+.film-3 { background:
+  radial-gradient(120% 90% at 30% 70%, #ffd166 0%, transparent 50%),
+  conic-gradient(from 280deg at 60% 40%, #19e3a5, #2f86ff, #ff5ea8, #19e3a5); }
+.film-4 { background:
+  radial-gradient(110% 110% at 50% 50%, #7af0ff 0%, transparent 60%),
+  conic-gradient(from 120deg at 50% 50%, #6a5cff, #00d4b8, #ffe08a, #ff6fae, #6a5cff); }
+
+/* ---------- 12. Footer --------------------------------------------- */
+.site-foot {
+  border-top: 1px solid var(--line);
+  padding-block: 2.5rem;
+  color: var(--ink-dim);
+}
+.site-foot .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.foot-links { display: flex; gap: 1.3rem; flex-wrap: wrap; }
+.foot-links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+}
+.foot-links a:hover { color: var(--beam); text-decoration: none; }
+.foot-note { font-family: var(--font-mono); font-size: 0.78rem; margin: 0; }
+
+/* ---------- 13. Gentle entrance animation -------------------------- */
+.fade-up { opacity: 0; transform: translateY(14px); animation: fadeUp 0.7s ease forwards; }
+.fade-up.d1 { animation-delay: 0.08s; }
+.fade-up.d2 { animation-delay: 0.16s; }
+.fade-up.d3 { animation-delay: 0.24s; }
+@keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+/* ---------- 14. Responsive ----------------------------------------- */
+@media (max-width: 1080px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--void);
+    border-bottom: 1px solid var(--line);
+    /* hidden until JS adds .open */
+    display: none;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { border-top: 1px solid var(--line); }
+  .nav-links a { display: block; padding: 0.9rem var(--pad); }
+
+  .hero-art {
+    width: 100%;
+    background-position: center top;
+    background-size: contain;
+    opacity: 0.24;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 78%);
+            mask-image: linear-gradient(180deg, #000 0%, transparent 78%);
+  }
+}
+
+/* Portrait stacks and centers on small screens. */
+@media (max-width: 600px) {
+  .portrait {
+    float: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 1.5rem;
+  }
+}
+
+/* ---------- 15. Respect reduced-motion ----------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-up { opacity: 1; transform: none; animation: none; }
+}
